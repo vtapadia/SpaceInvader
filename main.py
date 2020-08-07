@@ -3,7 +3,8 @@ import random
 
 pygame.init()
 
-screen = pygame.display.set_mode((800, 500))
+screen = pygame.display.set_mode((800, 600))
+background = pygame.image.load("background.png")
 
 pygame.display.set_caption("Space Invader")
 
@@ -12,15 +13,15 @@ pygame.display.set_icon(icon)
 
 playerImg = pygame.image.load("space-invaders.png")
 playerX = 370
-playerY = 400
+playerY = 470
 playerX_change = 0
 playerY_change = 0
 
 enemyImg = pygame.image.load("spaceship.png")
 enemyX = random.randint(0, 800)
 enemyY = random.randint(50, 150)
-enemyX_change = 0.2
-enemyY_change = 40
+enemyX_change = 4
+enemyY_change = 30
 
 def enemy(x, y):
     screen.blit(enemyImg, (x, y))
@@ -38,14 +39,15 @@ def xBound(x):
 running = True
 while running:
     screen.fill((210, 214, 214))
+    screen.blit(background, (0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                playerX_change = -0.2
+                playerX_change = -5
             if event.key == pygame.K_RIGHT:
-                playerX_change = 0.2
+                playerX_change = 5
         if event.type == pygame.KEYUP:
             if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
                 playerX_change = 0
@@ -58,10 +60,10 @@ while running:
         playerX = 760
 
     if enemyX <= 0:
-        enemyX_change = 0.3
+        enemyX_change = 4
         enemyY += enemyY_change
     elif enemyX >= 760:
-        enemyX_change = -0.3
+        enemyX_change = -4
         enemyY += enemyY_change
 
     enemyX += enemyX_change
